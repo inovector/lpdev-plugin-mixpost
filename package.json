@@ -1,6 +1,6 @@
 {
   "name": "lpdev-plugin-mixpost_tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mixpost.app specific development tools for lpdev",
   "main": "index.plugin",
   "keywords": [
