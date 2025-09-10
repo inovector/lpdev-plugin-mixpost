@@ -1,4 +1,4 @@
-# Mixpost Plugin for lpdev
+# Mixpost Tools Plugin for lpdev
 
 A development tools plugin for [Mixpost.app](https://mixpost.app) that automatically manages SSL configuration based on your application URL. This plugin integrates with [lpdev](https://github.com/inovector/lpdev) to streamline Mixpost development workflows.
 
@@ -23,19 +23,7 @@ This plugin is designed to work with [lpdev](https://github.com/inovector/lpdev)
 
 The plugin automatically activates when:
 - Setting an `APP_URL` environment variable
-- Adding a new project with a URL
-
-### Manual Commands
-
-Check SSL configuration status:
-```bash
-lpdev plugin mixpost enable-ssl-status
-```
-
-Show help:
-```bash
-lpdev plugin mixpost help
-```
+- Add APP_URL to the `.env` file of Mixpost package
 
 ## SSL Configuration Logic
 
@@ -59,16 +47,21 @@ This plugin responds to the following lpdev hooks:
 | `enable-ssl-status` | Display current SSL configuration status |
 | `help` | Show plugin usage information |
 
+Run command using:
+
+```bash
+lpdev plugin mixpost <command>
+```
+
 ## Requirements
 
-- lpdev development environment
+- [lpdev](https://www.npmjs.com/package/lpdev) installed on your system
 - Bash shell
-- Mixpost.app project structure
+- Mixpost project set up
 
 ## Author
 
-**Dima Botezatu**  
-Email: dima@inovector.com
+Dima Botezatu - [dimabotezatu.com](https://dimabotezatu.com)
 
 ## License
 

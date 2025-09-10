@@ -1,5 +1,5 @@
 {
-  "name": "lpdev-plugin-mixpost",
+  "name": "lpdev-plugin-mixpost-tools",
   "version": "1.0.0",
   "description": "Mixpost.app specific development tools for lpdev",
   "main": "index.plugin",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/inovector/lpdev-plugin-mixpost-ssl.git"
+    "url": "https://github.com/inovector/lpdev-plugin-mixpost-tools.git"
   },
   "files": [
     "index.plugin",
