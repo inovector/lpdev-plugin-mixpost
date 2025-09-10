@@ -1,6 +1,6 @@
 # Mixpost Plugin for lpdev
 
-A development tools plugin for [Mixpost.app](https://mixpost.app) that automatically manages SSL configuration based on your application URL.
+A development tools plugin for [Mixpost.app](https://mixpost.app) that automatically manages SSL configuration based on your application URL. This plugin integrates with [lpdev](https://github.com/inovector/lpdev) to streamline Mixpost development workflows.
 
 ## Features
 
@@ -11,7 +11,7 @@ A development tools plugin for [Mixpost.app](https://mixpost.app) that automatic
 
 ## Installation
 
-This plugin is designed to work with lpdev. Install with:
+This plugin is designed to work with [lpdev](https://github.com/inovector/lpdev). Install with:
 
  ```bash
  lpdev plugin install lpdev-plugin-mixpost
