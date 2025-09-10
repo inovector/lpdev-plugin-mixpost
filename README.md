@@ -14,7 +14,7 @@ A development tools plugin for [Mixpost.app](https://mixpost.app) that automatic
 This plugin is designed to work with [lpdev](https://github.com/inovector/lpdev). Install with:
 
  ```bash
- lpdev plugin install lpdev-plugin-mixpost
+ lpdev plugin install lpdev-plugin-mixpost_tools
  ```
 
 ## Usage
@@ -59,14 +59,6 @@ lpdev plugin mixpost <command>
 - Bash shell
 - Mixpost project set up
 
-## Author
-
-Dima Botezatu - [dimabotezatu.com](https://dimabotezatu.com)
-
 ## License
 
-MIT License - see LICENSE file for details.
-
-## Repository
-
-[https://github.com/inovector/lpdev-plugin-mixpost.git](https://github.com/inovector/lpdev-plugin-mixpost-ssl.git)
+[MIT License](LICENSE.md)
