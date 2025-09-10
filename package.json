@@ -1,6 +1,6 @@
 {
   "name": "lpdev-plugin-mixpost-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mixpost.app specific development tools for lpdev",
   "main": "index.plugin",
   "keywords": [
@@ -25,7 +25,13 @@
     "test": "bash -n index.plugin"
   },
   "lpdev": {
-    "hooks": ["on_env_set", "on_project_add"],
-    "commands": ["hello", "status"]
+    "hooks": [
+      "on_env_set",
+      "on_project_add"
+    ],
+    "commands": [
+      "hello",
+      "status"
+    ]
   }
 }
