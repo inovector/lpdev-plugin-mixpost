@@ -50,7 +50,7 @@ This plugin responds to the following lpdev hooks:
 Run command using:
 
 ```bash
-lpdev plugin mixpost <command>
+lpdev plugin mixpost_tools <command>
 ```
 
 ## Requirements
