@@ -1,0 +1,31 @@
+{
+  "name": "lpdev-plugin-mixpost",
+  "version": "1.0.0",
+  "description": "Mixpost.app specific development tools for lpdev",
+  "main": "index.plugin",
+  "keywords": [
+    "lpdev-plugin",
+    "lpdev",
+    "mixpost"
+  ],
+  "author": {
+    "name": "Dima Botezatu",
+    "email": "dima@inovector.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inovector/lpdev-plugin-mixpost-ssl.git"
+  },
+  "files": [
+    "index.plugin",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "bash -n index.plugin"
+  },
+  "lpdev": {
+    "hooks": ["on_env_set", "on_project_add"],
+    "commands": ["hello", "status"]
+  }
+}

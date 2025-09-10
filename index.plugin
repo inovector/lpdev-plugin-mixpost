@@ -1,0 +1,122 @@
+#!/bin/bash
+
+PLUGIN_NAME="mixpost"
+PLUGIN_VERSION="1.0.0"
+PLUGIN_DESCRIPTION="Tools for Mixpost.app"
+
+on_env_set() {
+    local key="$1"
+    local value="$2"
+    local package_path="$4"
+    
+    print_info "[$PLUGIN_NAME] Processing..."
+
+    # If APP_URL is changed, update in package and set ENABLE_SSL accordingly
+
+    if [ "$key" = "APP_URL" ]; then
+        if [ -f "$package_path/.env" ]; then
+            set_env_var "$package_path/.env" "$key" "$value"
+            plugin_set_enable_ssl "$value" "$package_path"
+            print_success "[$PLUGIN_NAME] APP_URL set to $value in package"
+        fi
+    fi
+}
+
+on_project_add() {
+    local project_name="$1"
+    local app_url="$2"
+    local app_path="$3"
+    local package_path="$4"
+    
+    # If APP_URL is provided, set it in the package and configure ENABLE_SSL
+
+    if [ -n "$app_url" ]; then
+        print_info "[$PLUGIN_NAME] Setting up APP_URL in package: $project_name"
+
+        set_env_var "$package_path/.env" "APP_URL" "$app_url"
+        
+        plugin_set_enable_ssl "$app_url" "$package_path"
+
+        print_success "APP_URL set to $app_url in package"
+    fi
+}
+
+plugin_set_enable_ssl() {
+    local app_url="$1"
+    local package_path="$2"
+    
+     # Determine ENABLE_SSL value based on domain
+    local enable_ssl_value=""
+    # echo "$app_url";
+    if [[ "$app_url" == *".test"* ]] || [[ "$app_url" == *".local"* ]]; then
+        # Local development domains
+        enable_ssl_value=null
+        print_info "[$PLUGIN_NAME] Local domain detected, setting ENABLE_SSL=null"
+    elif [[ "$app_url" == *"localhost"* ]] || [[ "$app_url" == *"127.0.0.1"* ]] || [[ "$app_url" == *"::1"* ]]; then
+        # Localhost
+        enable_ssl_value=null
+        print_info "[$PLUGIN_NAME] Localhost detected, setting ENABLE_SSL=false"
+    else
+        # Assume production/staging domain
+        enable_ssl_value=false
+        print_info "[$PLUGIN_NAME] Remote domain detected, setting ENABLE_SSL=false"
+    fi
+    
+    if [ -f "$package_path/.env" ]; then
+        set_env_var "$package_path/.env" "ENABLE_SSL" "$enable_ssl_value"
+        print_success "[$PLUGIN_NAME] Package: ENABLE_SSL=$enable_ssl_value"
+    fi
+}
+
+# Plugin commands
+plugin_mixpost_enable_ssl_status() {
+    eval $(get_current_project) || return 1
+    
+    print_header "[$PLUGIN_NAME] SSL Configuration Status"
+    
+    local app_ssl=$(grep "^ENABLE_SSL=" "$LPDEV_APP_PATH/.env" 2>/dev/null | cut -d'=' -f2- | tr -d '"')
+    local pkg_ssl=""
+    
+    if [ -f "$LPDEV_PACKAGE_PATH/.env" ]; then
+        pkg_ssl=$(grep "^ENABLE_SSL=" "$LPDEV_PACKAGE_PATH/.env" 2>/dev/null | cut -d'=' -f2- | tr -d '"')
+    fi
+    
+    echo -e "${BOLD}App ENABLE_SSL:${NC} ${GREEN}${app_ssl:-'not set'}${NC}"
+    echo -e "${BOLD}Package ENABLE_SSL:${NC} ${GREEN}${pkg_ssl:-'not set'}${NC}"
+    
+    local app_url=$(grep "^APP_URL=" "$LPDEV_APP_PATH/.env" 2>/dev/null | cut -d'=' -f2- | tr -d '"')
+    if [ -n "$app_url" ]; then
+        echo -e "${BOLD}Current APP_URL:${NC} ${app_url}"
+        
+        # Show what the plugin would set
+        local recommended=""
+        if [[ "$app_url" == *".test"* ]] || [[ "$app_url" == *".local"* ]]; then
+            recommended="null"
+        elif [[ "$app_url" == *"localhost"* ]] || [[ "$app_url" == *"127.0.0.1"* ]] || [[ "$app_url" == *"::1"* ]]; then
+            recommended="false"
+        else
+            recommended="true"
+        fi
+        echo -e "${BOLD}Recommended:${NC} ${CYAN}$recommended${NC}"
+    fi
+}
+
+plugin_mixpost_show_help() {
+    echo -e "${BOLD}${BLUE}Mixpost Tools${NC}
+
+${BOLD}USAGE:${NC}
+    lpdev plugin mixpost <command> [options]
+
+${BOLD}COMMANDS:${NC}
+    ${GREEN}enable-ssl-status${NC}          # Enable SSL STATUS
+
+${BOLD}EXAMPLES:${NC}
+    lpdev plugin mixpost enable-ssl-status          # Enable SSL STATUS"
+}
+
+# Handle commands
+case "${1}" in
+    help) plugin_mixpost_show_help ;;
+    enable-ssl-status) plugin_mixpost_enable_ssl_status ;;
+    *) ;;
+esac
